@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 require('babel-polyfill');
 
 var React = require('react');
@@ -10,4 +12,6 @@ require('./index.css');
 ReactDOM.render(
   <Main/>,
   document.getElementById('root')
+
 );
+
