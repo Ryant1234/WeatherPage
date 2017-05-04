@@ -1,5 +1,8 @@
 /* eslint-disable */
 
+//TODO - make temp divs smaller. 
+// 
+
 var React = require('react');
 var Header = require('./header');
 var Title = require('./title');
@@ -96,6 +99,9 @@ function updateWeather (weatherData) {
    divMinTemp.textContent = "Minimum Temperature: " + weatherData.minTemp;
    divTemp.textContent =  "Current Temperature: " +  weatherData.temperature;
    divWindSpeed.textContent = "Wind Speed: " + weatherData.windSpeed;
+
+       changeTemperatureBackgroundColor(weatherData.minTemp, weatherData.maxTemp, weatherData.temperature);
+      
 }
 
 
@@ -114,7 +120,7 @@ Object.defineProperty(Weather.prototype, 'maxTemp', {
     return this._maxTemp;
   },
   set: function(value){
-    return  this._maxTemp = (value)+ 'C.';
+    return  this._maxTemp = (value);//+ 'C.';
   }
 });
 
@@ -123,7 +129,7 @@ Object.defineProperty(Weather.prototype, 'minTemp', {
     return this._minTemp;
   },
   set: function(value){
-  return   this._minTemp = (value) + 'C.';
+  return   this._minTemp = (value);// + 'C.';
   }
 });
 
@@ -157,7 +163,7 @@ Object.defineProperty(Weather.prototype, 'temperature', {
     return this._temperature;
   },
   set: function(value){
-    this._temperature =  (value) + 'C.';
+    this._temperature =  (value);// + 'C.';
   }
 });
 
@@ -210,7 +216,7 @@ if (windAngle >= 303.75 &&  windAngle  < 348.75 )
 
 
 // I honestly couldn't think of a better name for this.. for now. Maybe I'm over thinking.
-function WeatherConditionAdvice(){
+function weatherConditionAdvice(){
 switch (conditions)
 {
 case  'Clear':
@@ -230,49 +236,61 @@ case  'Clear':
 }
 
 
-function setTemperatureBackGround(temp)
+function setTemperatureBackGroundColor(temp)
 {
-  if (temp >= 0 && temp <= 6 )
+
+ if (temp <= 4.9  )
   {
-    return "light blue";
+    return "#bceefb";
   } 
 
-    if (temp >= 7 && temp <= 13 )
+  if (temp >= 5 && temp <= 9.9 )
   {
-    return "camo green?";
+    return "#b9ecd8";
   } 
 
-    if (temp >= 14 && temp <= 20 )
+    if (temp >= 10 && temp <= 14.9 )
   {
-    return "dark green";
+    console.log ("more then 10");
+    return "#cadb92";
   } 
 
-  if (temp >= 21 && temp <= 27 )
+    if (temp >= 15 && temp <= 19.9 )
   {
-    return "light orange";
+    return "#ffeb88";
   } 
 
-   if (temp >= 28 && temp <= 34 )
+  if (temp >= 20 && temp <= 27 )
   {
-    return "Orange";
+    return "#FBC25E";
+  } 
+
+   if (temp >= 25 && temp <= 34 )
+  {
+    return "#FF9933";
   } 
 
      if (temp >= 35 && temp <= 39 )
   {
-    return "Light Red";
+    return "#cd5b12";
   } 
 
-    if (temp >= 40  )
-  {
-    return "Red";
-  } 
 }
 
 
-function setTemperatureBackGround()
+function changeTemperatureBackgroundColor(min, max, temp)
 {
-  switch(temp)
-  {
-    
-  }
+      
+  console.log('Inside ChangeTemp');
+     divMinTemp.style.backgroundColor =  setTemperatureBackGroundColor(min);
+     divMaxTemp.style.backgroundColor = setTemperatureBackGroundColor(max);
+     divTemp.style.backgroundColor =  setTemperatureBackGroundColor(temp);
+
 }
+
+
+
+
+
+
+
