@@ -47,7 +47,7 @@ var divWindDirection = document.getElementById('windDirection');
 var divMinTemp = document.getElementById('minTemperature');
 var divMaxTemp = document.getElementById('maxTemperature');
 var divTemp = document.getElementById('weatherTemperature')
-
+var divWindSpeed = document.getElementById('windSpeed')
 function searchWeather() {
   var cityName = searchCity.value;
 
@@ -73,11 +73,11 @@ function searchWeather() {
    }
  
 
-      var weatherData = new Weather(cityName, data.weather[0].description.toUpperCase(),);
-     weatherData.maxTemp = data.main.temp_max;
-      weatherData.minTemp = data.main.temp_min; 
+      var weatherData = new Weather(cityName, data.weather[0].description,);
+     weatherData.maxTemp =   + data.main.temp_max;
+      weatherData.minTemp =  + data.main.temp_min; 
        weatherData.temperature = data.main.temp; 
-        weatherData.windSpeed = data.wind.speed; 
+        weatherData.windSpeed =  +  data.wind.speed + "km/h";
          weatherData.windDirection = data.wind.deg; 
          updateWeather(weatherData)
       
@@ -90,11 +90,12 @@ function searchWeather() {
 
 function updateWeather (weatherData) {
   divCity.textContent = weatherData.CityName;
-   divDescription.textContent = weatherData.description;
-   divWindDirection.textContent = weatherData.windDirection;
-   divMaxTemp.textContent = weatherData.maxTemp;
-   divMinTemp.textContent = weatherData.minTemp;
-   divTemp.textContent = weatherData.temperature;
+   divDescription.textContent = "Conditions: " + weatherData.description;
+   divWindDirection.textContent = "Wind Direction: " + weatherData.windDirection;
+   divMaxTemp.textContent = "Maximum Temperature: " + weatherData.maxTemp;
+   divMinTemp.textContent = "Minimum Temperature: " + weatherData.minTemp;
+   divTemp.textContent =  "Current Temperature: " +  weatherData.temperature;
+   divWindSpeed.textContent = "Wind Speed: " + weatherData.windSpeed;
 }
 
 
@@ -205,4 +206,73 @@ if (windAngle >= 303.75 &&  windAngle  < 348.75 )
 }
 
  
+}
+
+
+// I honestly couldn't think of a better name for this.. for now. Maybe I'm over thinking.
+function WeatherConditionAdvice(){
+switch (conditions)
+{
+case  'Clear':
+     return 'Clear skies today!';
+     break;
+
+     case  'Rain':
+     return 'Better put on a jacket or take your umbrella with you!';
+     break;
+
+     case 'storm':
+     {
+       return 'Stormy day today!';
+     };
+
+}
+}
+
+
+function setTemperatureBackGround(temp)
+{
+  if (temp >= 0 && temp <= 6 )
+  {
+    return "light blue";
+  } 
+
+    if (temp >= 7 && temp <= 13 )
+  {
+    return "camo green?";
+  } 
+
+    if (temp >= 14 && temp <= 20 )
+  {
+    return "dark green";
+  } 
+
+  if (temp >= 21 && temp <= 27 )
+  {
+    return "light orange";
+  } 
+
+   if (temp >= 28 && temp <= 34 )
+  {
+    return "Orange";
+  } 
+
+     if (temp >= 35 && temp <= 39 )
+  {
+    return "Light Red";
+  } 
+
+    if (temp >= 40  )
+  {
+    return "Red";
+  } 
+}
+
+
+function setTemperatureBackGround()
+{
+  switch(temp)
+  {
+    
+  }
 }
