@@ -49,8 +49,8 @@ var loadingText = document.getElementById('load');
 var weatherBox = document.getElementById('weather');
 var tblDescription = document.getElementById('weatherDescription');
 var tblWindDirection = document.getElementById('windDirection');
-var tblMinTemp = document.getElementById('minTemperature');
-var tblMaxTemp = document.getElementById('maxTemperature');
+//var tblMinTemp = document.getElementById('minTemperature');
+//var tblMaxTemp = document.getElementById('maxTemperature');
 var tblTemp = document.getElementById('weatherTemperature')
 var tblWindSpeed = document.getElementById('windSpeed')
 function searchWeather() {
@@ -78,9 +78,10 @@ function searchWeather() {
    }
  
 
-      var weatherData = new Weather(cityName, data.weather[0].description,);
-     weatherData.maxTemp =    data.main.temp_max;
-      weatherData.minTemp =   data.main.temp_min; 
+      var weatherData = new Weather(cityName);
+    // weatherData.maxTemp =    data.main.temp_max;
+    //  weatherData.minTemp =   data.main.temp_min; 
+       weatherData.description = data.weather[0].description
        weatherData.temperature = data.main.temp; 
         weatherData.windSpeed =  data.wind.speed;
          weatherData.windDirection = data.wind.deg; 
@@ -97,10 +98,10 @@ function updateWeather (weatherData) {
   tblCity.textContent = weatherData.CityName;
    tblDescription.textContent = weatherData.description;
    tblWindDirection.textContent = weatherData.windDirection;
-   tblMaxTemp.textContent = weatherData.maxTemp + "°C";
-   tblMinTemp.textContent = weatherData.minTemp + "°C";
+  // tblMaxTemp.textContent = weatherData.maxTemp + "°C";
+ //  tblMinTemp.textContent = weatherData.minTemp + "°C";
    tblTemp.textContent =     weatherData.temperature + "°C";
-   tblWindSpeed.textContent =   weatherData.windSpeed;
+   tblWindSpeed.textContent =   weatherData.windSpeed + "km/h";
 weatherTable.style.visibility= 'visible';
 
        changeTemperatureBackgroundColor(weatherData.minTemp, weatherData.maxTemp, weatherData.temperature);
@@ -108,14 +109,15 @@ weatherTable.style.visibility= 'visible';
 }
 
 
-function Weather(cityName, description) {
+function Weather(cityName) {
   this.CityName = cityName;
-  this.description = description;
-  this._maxTemp = '';
-  this._minTemp = '';
+  this._description = '';
+//  this._maxTemp = '';
+ // this._minTemp = '';
   this._temperature = '';
   this._windSpeed = '';
   this._windDirection = '';
+
 }
 
 
@@ -234,8 +236,8 @@ function changeTemperatureBackgroundColor(min, max, temp)
 {
       
   console.log('Inside ChangeTemp');
-     tblMinTemp.style.backgroundColor =  setTemperatureBackGroundColor(min);
-     tblMaxTemp.style.backgroundColor = setTemperatureBackGroundColor(max);
+    // tblMinTemp.style.backgroundColor =  setTemperatureBackGroundColor(min);
+  //   tblMaxTemp.style.backgroundColor = setTemperatureBackGroundColor(max);
      tblTemp.style.backgroundColor =  setTemperatureBackGroundColor(temp);
 
 }
@@ -247,23 +249,23 @@ function changeTemperatureBackgroundColor(min, max, temp)
 
 
 
-Object.defineProperty(Weather.prototype, 'maxTemp', {
+/*Object.defineProperty(Weather.prototype, 'maxTemp', {
   get: function() {
     return this._maxTemp;
   },
   set: function(value){
     return  this._maxTemp = Math.round(value);
   }
-});
+});*/
 
-Object.defineProperty(Weather.prototype, 'minTemp', {
+/*Object.defineProperty(Weather.prototype, 'minTemp', {
   get: function() {
     return this._minTemp;
   },
   set: function(value){
   return   this._minTemp = Math.round(value);
   }
-});
+});*/
 
 Object.defineProperty(Weather.prototype, 'windSpeed', {
   get: function() {
@@ -273,7 +275,7 @@ Object.defineProperty(Weather.prototype, 'windSpeed', {
 
 
     
-   return   this._windSpeed =(value);
+   return   this._windSpeed = Math.round(3.6 * (value));
   }
 });
 
@@ -296,5 +298,15 @@ Object.defineProperty(Weather.prototype, 'temperature', {
   },
   set: function(value){
     this._temperature = Math.round(value);// + 'C.';
+  }
+});
+
+
+Object.defineProperty(Weather.prototype, 'description', {
+  get: function() {
+    return this._description;
+  },
+  set: function(value){
+    this._description = (value).charAt(0).toUpperCase() + (value).slice(1);// + 'C.';
   }
 });
