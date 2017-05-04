@@ -16,3 +16,13 @@ a {
 a:hover {
   color: #5aadbb;
 }
+
+
+weathercellleft {
+  border-right: none;
+}
+
+#weather {
+    visibility: hidden;
+
+}

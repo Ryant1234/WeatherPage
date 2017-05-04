@@ -41,16 +41,18 @@ module.exports = React.createClass({
 var searchButton = document.getElementById('searchButton');
 searchButton.addEventListener('click', searchWeather);
 var data = data;
-var divCity =  document.getElementById('weatherCity');
+
+var weatherTable = document.getElementById('weather')
+var tblCity =  document.getElementById('weatherCity');
 var searchCity = document.getElementById('city');
 var loadingText = document.getElementById('load');
 var weatherBox = document.getElementById('weather');
-var divDescription = document.getElementById('weatherDescription');
-var divWindDirection = document.getElementById('windDirection');
-var divMinTemp = document.getElementById('minTemperature');
-var divMaxTemp = document.getElementById('maxTemperature');
-var divTemp = document.getElementById('weatherTemperature')
-var divWindSpeed = document.getElementById('windSpeed')
+var tblDescription = document.getElementById('weatherDescription');
+var tblWindDirection = document.getElementById('windDirection');
+var tblMinTemp = document.getElementById('minTemperature');
+var tblMaxTemp = document.getElementById('maxTemperature');
+var tblTemp = document.getElementById('weatherTemperature')
+var tblWindSpeed = document.getElementById('windSpeed')
 function searchWeather() {
   var cityName = searchCity.value;
 
@@ -77,10 +79,10 @@ function searchWeather() {
  
 
       var weatherData = new Weather(cityName, data.weather[0].description,);
-     weatherData.maxTemp =   + data.main.temp_max;
-      weatherData.minTemp =  + data.main.temp_min; 
+     weatherData.maxTemp =    data.main.temp_max;
+      weatherData.minTemp =   data.main.temp_min; 
        weatherData.temperature = data.main.temp; 
-        weatherData.windSpeed =  +  data.wind.speed + "km/h";
+        weatherData.windSpeed =  data.wind.speed;
          weatherData.windDirection = data.wind.deg; 
          updateWeather(weatherData)
       
@@ -92,13 +94,14 @@ function searchWeather() {
 
 
 function updateWeather (weatherData) {
-  divCity.textContent = weatherData.CityName;
-   divDescription.textContent = "Conditions: " + weatherData.description;
-   divWindDirection.textContent = "Wind Direction: " + weatherData.windDirection;
-   divMaxTemp.textContent = "Maximum Temperature: " + weatherData.maxTemp;
-   divMinTemp.textContent = "Minimum Temperature: " + weatherData.minTemp;
-   divTemp.textContent =  "Current Temperature: " +  weatherData.temperature;
-   divWindSpeed.textContent = "Wind Speed: " + weatherData.windSpeed;
+  tblCity.textContent = weatherData.CityName;
+   tblDescription.textContent = weatherData.description;
+   tblWindDirection.textContent = weatherData.windDirection;
+   tblMaxTemp.textContent = weatherData.maxTemp + "°C";
+   tblMinTemp.textContent = weatherData.minTemp + "°C";
+   tblTemp.textContent =     weatherData.temperature + "°C";
+   tblWindSpeed.textContent =   weatherData.windSpeed;
+weatherTable.style.visibility= 'visible';
 
        changeTemperatureBackgroundColor(weatherData.minTemp, weatherData.maxTemp, weatherData.temperature);
       
@@ -115,57 +118,6 @@ function Weather(cityName, description) {
   this._windDirection = '';
 }
 
-Object.defineProperty(Weather.prototype, 'maxTemp', {
-  get: function() {
-    return this._maxTemp;
-  },
-  set: function(value){
-    return  this._maxTemp = (value);//+ 'C.';
-  }
-});
-
-Object.defineProperty(Weather.prototype, 'minTemp', {
-  get: function() {
-    return this._minTemp;
-  },
-  set: function(value){
-  return   this._minTemp = (value);// + 'C.';
-  }
-});
-
-Object.defineProperty(Weather.prototype, 'windSpeed', {
-  get: function() {
-    return this._windSpeed;
-  },
-  set: function(value){
-
-
-    
-   return   this._windSpeed;
-  }
-});
-
-Object.defineProperty(Weather.prototype, 'windDirection', {
-  get: function() {
-    
-    return this._windDirection;
-  },
-  set: function(value){
-
-    
-    
-    return  this._windDirection = getWindDirection(value);
-  }
-});
-
-Object.defineProperty(Weather.prototype, 'temperature', {
-  get: function() {
-    return this._temperature;
-  },
-  set: function(value){
-    this._temperature =  (value);// + 'C.';
-  }
-});
 
 function getWindDirection(windAngle)
 {
@@ -282,9 +234,9 @@ function changeTemperatureBackgroundColor(min, max, temp)
 {
       
   console.log('Inside ChangeTemp');
-     divMinTemp.style.backgroundColor =  setTemperatureBackGroundColor(min);
-     divMaxTemp.style.backgroundColor = setTemperatureBackGroundColor(max);
-     divTemp.style.backgroundColor =  setTemperatureBackGroundColor(temp);
+     tblMinTemp.style.backgroundColor =  setTemperatureBackGroundColor(min);
+     tblMaxTemp.style.backgroundColor = setTemperatureBackGroundColor(max);
+     tblTemp.style.backgroundColor =  setTemperatureBackGroundColor(temp);
 
 }
 
@@ -294,3 +246,55 @@ function changeTemperatureBackgroundColor(min, max, temp)
 
 
 
+
+Object.defineProperty(Weather.prototype, 'maxTemp', {
+  get: function() {
+    return this._maxTemp;
+  },
+  set: function(value){
+    return  this._maxTemp = Math.round(value);
+  }
+});
+
+Object.defineProperty(Weather.prototype, 'minTemp', {
+  get: function() {
+    return this._minTemp;
+  },
+  set: function(value){
+  return   this._minTemp = Math.round(value);
+  }
+});
+
+Object.defineProperty(Weather.prototype, 'windSpeed', {
+  get: function() {
+    return this._windSpeed;
+  },
+  set: function(value){
+
+
+    
+   return   this._windSpeed =(value);
+  }
+});
+
+Object.defineProperty(Weather.prototype, 'windDirection', {
+  get: function() {
+    
+    return this._windDirection;
+  },
+  set: function(value){
+
+    
+    
+    return  this._windDirection = getWindDirection(value);
+  }
+});
+
+Object.defineProperty(Weather.prototype, 'temperature', {
+  get: function() {
+    return this._temperature;
+  },
+  set: function(value){
+    this._temperature = Math.round(value);// + 'C.';
+  }
+});
