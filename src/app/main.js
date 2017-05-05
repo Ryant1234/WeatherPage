@@ -93,7 +93,6 @@ function searchWeather() {
 } 
 
 
-
 function updateWeather (weatherData) {
   tblCity.textContent = weatherData.CityName;
    tblDescription.textContent = weatherData.description;
@@ -269,13 +268,11 @@ function changeTemperatureBackgroundColor(min, max, temp)
 
 Object.defineProperty(Weather.prototype, 'windSpeed', {
   get: function() {
-    return this._windSpeed;
+  return this._windSpeed;
   },
   set: function(value){
 
-
-    
-   return   this._windSpeed = Math.round(3.6 * (value));
+   return this._windSpeed = Math.round(3.6 * (value));
   }
 });
 
@@ -309,6 +306,6 @@ Object.defineProperty(Weather.prototype, 'description', {
   set: function(value){
     this._description = (value).charAt(0).toUpperCase() + (value).slice(1);// + 'C.';
   }
-});
+} );
 
 // ? 
